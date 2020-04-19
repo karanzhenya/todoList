@@ -3,6 +3,7 @@ import './App.css';
 import TodoListHeader from "./TodoListHeader";
 import TodoListFooter from "./TodoListFooter";
 import TodoListTasks from "./TodoListTasks";
+import PropTypes from 'prop-types';
 
 class App extends React.Component {
 
@@ -56,4 +57,6 @@ class App extends React.Component {
 }
 
 export default App;
+App.propTypes = {
 
+};

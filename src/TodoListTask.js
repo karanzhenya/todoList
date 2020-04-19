@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 
 class TodoListTask extends React.Component {
     render = () => {
@@ -12,3 +14,6 @@ class TodoListTask extends React.Component {
 }
 export default TodoListTask;
 
+TodoListTask.propTypes = {
+title: PropTypes.string
+};

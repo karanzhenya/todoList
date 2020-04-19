@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import TodoListTask from "./TodoListTask";
+import PropTypes from 'prop-types';
+
 
 class TodoListTasks extends React.Component {
     render = () => {
@@ -17,4 +19,6 @@ class TodoListTasks extends React.Component {
 }
 
 export default TodoListTasks;
-
+TodoListTasks.propTypes = {
+isDone: PropTypes.bool
+};
