@@ -14,7 +14,7 @@ class TodoListFooter extends React.Component {
                         <button className={classForActive}>Active</button>
                     </div>
                 </div>
-        );
+        )
     }
 }
 
