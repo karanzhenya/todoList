@@ -12,7 +12,15 @@
 }
 
 .todoList-task {
-
 }
+
+.todoList-task.done {
+opacity: 0.5;
+}
+
 .filter-active {
   background-color: mediumpurple}
+
+.error {
+  border-color: red;
+}
