@@ -6,22 +6,22 @@ import PropTypes from 'prop-types';
 class TodoListHeader extends React.Component {
 
     state = {
-        error: false
+        error: false,
+        title: ""
     };
-    newTaskTitleRef = React.createRef();    //создание новой ссылки для инпута
     onAddTaskClick = () => {
-        let newTitle = this.newTaskTitleRef.current.value;
-        this.newTaskTitleRef.current.value = "";
+        let newTitle = this.state.title;
         if ( newTitle !== "") {
         this.props.addTask(newTitle);
-            this.setState({error: false})
+            this.setState({error: false, title: ""})
         }
 
         else {
             this.setState({error: true})
         }
     };
-    onKeyPress = (e) => { if (e.key === "Enter"){this.onAddTaskClick()}}
+    onKeyPress = (e) => { if (e.key === "Enter"){this.onAddTaskClick()}};
+    onTitleChanged = (e) => {this.setState({title: e.currentTarget.value})};
 
     render = () => {
         const inputClassName = this.state.error? "error" : "";
@@ -29,7 +29,7 @@ class TodoListHeader extends React.Component {
             <div className="TodoListHeader">
                 <h3 className="todoList-header__title">What to Learn</h3>
                 <div className="todoList-newTaskForm">
-                    <input type="text" placeholder="New task name" className={inputClassName} onKeyPress={this.onKeyPress} ref={this.newTaskTitleRef} />
+                    <input type="text" placeholder="New task name" className={inputClassName} onKeyPress={this.onKeyPress} value={this.state.title} onChange={this.onTitleChanged}/>
                     <button onClick={this.onAddTaskClick}>Add</button>
                 </div>
             </div>
