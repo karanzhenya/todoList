@@ -9,34 +9,37 @@ class App extends React.Component {
 
     state = {
         tasks: [
-            {title: 'ReactJS', isDone: false, priority: "low"},
-            {title: 'CSS', isDone: false, priority: "hight"},
-            {title: 'JS', isDone: false, priority: "low"},
-            {title: 'jQuery', isDone: true, priority: "medium"},
-            {title: 'Patterns', isDone: true, priority: "low"}
+            {id: 1, title: 'ReactJS', isDone: false, priority: "low"},
+            {id: 2, title: 'CSS', isDone: false, priority: "hight"},
+            {id: 3, title: 'JS', isDone: false, priority: "low"},
+            {id: 4, title: 'jQuery', isDone: true, priority: "medium"},
+            {id: 5, title: 'Patterns', isDone: true, priority: "low"}
         ],
         filterValue: ""
     };
+    nextTaskId = 6;
     addTask = (newTitle) => {
         let newTask = {
             title: newTitle,
             isDone: false,
-            priority: "low"                              //создание новой таски
+            priority: "low",
+            id: this.nextTaskId
         };
+        this.nextTaskId++;
         let newTasks = [...this.state.tasks, newTask];
         this.setState({tasks: newTasks});};
 
     changeFilter = (newFilterValue) => {
         this.setState({filterValue: newFilterValue})};
 
-    changeStatus = (task, isDone) => {
-        let newTasks = this.state.tasks.map(t => {
-            if(t === task) {
-                return { ...t, isDone: isDone}
+    changeStatus = (taskId, status) => {
+        let taskCopy = this.state.tasks.map(t => {
+            if(t.id === taskId) {
+                return { ...t, isDone: status}
             }
             return t;
         });
-        this.setState({tasks: newTasks})
+        this.setState({tasks: taskCopy})
     };
 
     render() {

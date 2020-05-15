@@ -3,8 +3,17 @@ import PropTypes from 'prop-types';
 
 
 class TodoListTask extends React.Component {
+    state = {
+        editMode: false
+    };
+    activateEditMode = () => {
+        this.setState({editMode: true})
+    };
+    deactivateEditMode = () => {
+        this.setState({editMode: false})
+    };
     onIsDoneChanged = (event) => {
-        this.props.changeStatus(this.props.task, event.currentTarget.checked)
+        this.props.changeStatus(this.props.task.id, event.currentTarget.checked)
     };
     render = () => {
 
@@ -14,7 +23,9 @@ class TodoListTask extends React.Component {
             <div className={taskClassName}>
                 <input type="checkbox" checked={this.props.task.isDone} onChange={this.onIsDoneChanged}
                 />
-                <span>{this.props.task.title} - priority: {this.props.task.priority}</span>
+                {this.state.editMode ?
+                    <input autoFocus={true} onBlur={this.deactivateEditMode} value={this.props.task.title}/> :
+                <span onClick={this.activateEditMode}>{this.props.task.id} - {this.props.task.title} - priority: {this.props.task.priority}</span>}
             </div>
         )
     }
