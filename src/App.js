@@ -32,15 +32,27 @@ class App extends React.Component {
     changeFilter = (newFilterValue) => {
         this.setState({filterValue: newFilterValue})};
 
-    changeStatus = (taskId, status) => {
+    changeTask = (taskId, obj) => {
         let taskCopy = this.state.tasks.map(t => {
             if(t.id === taskId) {
-                return { ...t, isDone: status}
+                return { ...t, ...obj}
             }
             return t;
         });
         this.setState({tasks: taskCopy})
     };
+
+    changeStatus = (taskId, status) => {
+        let obj = {
+            isDone: status
+        };
+        this.changeTask(taskId, obj)
+    };
+    changeTitle = (taskId, title) => {
+        let obj = {
+            title: title
+        };
+        this.changeTask(taskId, obj)};
 
     render() {
         let filteredTasks = this.state.tasks.filter(t => {
@@ -63,7 +75,8 @@ class App extends React.Component {
 
                     <TodoListTasks
                         tasks={filteredTasks}
-                        changeStatus={this.changeStatus}/>
+                        changeStatus={this.changeStatus}
+                        changeTitle={this.changeTitle}/>
 
                     <TodoListFooter filterValue={this.state.filterValue}
                                     changeFilter={this.changeFilter}/>
