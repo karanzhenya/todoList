@@ -8,16 +8,28 @@ import PropTypes from 'prop-types';
 class App extends React.Component {
 
     state = {
-        tasks: [
-            {id: 1, title: 'ReactJS', isDone: false, priority: "low"},
-            {id: 2, title: 'CSS', isDone: false, priority: "hight"},
-            {id: 3, title: 'JS', isDone: false, priority: "low"},
-            {id: 4, title: 'jQuery', isDone: true, priority: "medium"},
-            {id: 5, title: 'Patterns', isDone: true, priority: "low"}
-        ],
+        tasks: [ ],
         filterValue: ""
     };
-    nextTaskId = 6;
+    
+    componentDidMount = () => {
+        this.restoreState();
+    };
+
+    saveState = () => {
+        let stateAsString = JSON.stringify(this.state);
+        localStorage.setItem("our-state", stateAsString)
+    };
+    restoreState = () => {
+        let stateAsString = localStorage.getItem("our-state");
+        if (stateAsString) {
+        let state = JSON.parse(stateAsString);
+        state.tasks.forEach(t => {
+            if(t.id >= this.nextTaskId) {this.nextTaskId = t.id +1}
+        });
+        this.setState(state)
+    }};
+    nextTaskId = 1;
     addTask = (newTitle) => {
         let newTask = {
             title: newTitle,
@@ -27,10 +39,11 @@ class App extends React.Component {
         };
         this.nextTaskId++;
         let newTasks = [...this.state.tasks, newTask];
-        this.setState({tasks: newTasks});};
+        this.setState({tasks: newTasks});
+    };
 
     changeFilter = (newFilterValue) => {
-        this.setState({filterValue: newFilterValue})};
+        this.setState({filterValue: newFilterValue}, () => {this.saveState()})};
 
     changeTask = (taskId, obj) => {
         let taskCopy = this.state.tasks.map(t => {
@@ -39,7 +52,7 @@ class App extends React.Component {
             }
             return t;
         });
-        this.setState({tasks: taskCopy})
+        this.setState({tasks: taskCopy}, () => {this.saveState()})
     };
 
     changeStatus = (taskId, status) => {
